@@ -1,10 +1,9 @@
 # loading example data ----
-## format: list of data.frames; each data.frame=1 document
-## each data.frame contain 2 coulmns, each for predicates and arguments
+## format: list of data.frames; each data.frame = predicate and argument pairs from a single document
+## each coulmn for predicates and arguments
 load("example_content.rda")
 
 # loading helper functions ----
-# source('functions_mLDA_col_gibbs.R')
 source("functions_helper.R")
 
 library(Rcpp)
@@ -17,9 +16,12 @@ sourceCpp("functions_biTM_gibbs.cpp")
 exCont_dep <- lapply(example_content, function(df){df[, "dependent"]})
 exCont_gov <- lapply(example_content, function(df){df[, "governor"]})
 
+## ACTUAL data structure that is going to be used in training biTM models
+### unique words
 exCont_dep_voc <- unique(unlist(exCont_dep))
 exCont_gov_voc <- unique(unlist(exCont_gov))
 
+### vector of word ids per document
 exCont_dep_id <- words_to_id(exCont_dep, exCont_dep_voc)
 exCont_gov_id <- words_to_id(exCont_gov, exCont_gov_voc)
 
@@ -41,6 +43,7 @@ mod_gibbs  <- biTM_colGibbs(mod_init_zero$alpha, mod_init_zero$beta_dep, mod_ini
 # posterior distribution ----
 mod_post <- biTM_posterior(mod_gibbs$doc_topic, mod_gibbs$dep_t, mod_gibbs$gov_t, exCont_dep_voc, exCont_gov_voc,
                            mod_init_zero$alpha, mod_init_zero$beta_dep, mod_init_zero$beta_gov)
+
 
 # descriptive results ----
 ## top 5 terms per topic

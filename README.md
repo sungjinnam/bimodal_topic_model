@@ -19,3 +19,4 @@ Implementation of bimodal topic model in `R`
 
 ## TODO
 - Optimize the performance with alternative object structures, e.g., `quanteda`: objects for sparse matrix
+- Collapse biTM training process into a single function
