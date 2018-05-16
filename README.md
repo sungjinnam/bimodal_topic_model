@@ -1,5 +1,5 @@
 # Bimodal Topic Model for dependency pairs
-Implementation of bimodal topic model in `R`
+Implementation of bimodal topic model in `RCpp`
 
 ## Relevant literature
 - Collapsed Gibbs sampling
